@@ -125,4 +125,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.gitignore
+
+API-key.txt
+
+
 node_modules
