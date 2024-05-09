@@ -1,8 +1,9 @@
 import React from 'react'
 import './Navigation.css'
-const Navigation = () => {
+const LandingNavigation = () => {
   return (
-    <nav>   
+
+<nav>   
         <ul>
             <li>
                 <a href="/home">
@@ -34,7 +35,9 @@ const Navigation = () => {
             </li>
             </ul>
          </nav>
+
+
   )
 }
 
-export default Navigation
+export default LandingNavigation
