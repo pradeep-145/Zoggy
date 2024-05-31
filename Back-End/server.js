@@ -1,17 +1,49 @@
+require('dotenv').config();
 const mongoose = require('mongoose')
 const express=require('express')
 const cors=require('cors')
 const app=express()
+const nodemailer=require('nodemailer')
 const User=require('./models/UserModel')
 app.use(express.json())
 app.use(cors())
 const PORT=1234
-mongoose.connect('mongodb+srv://pradeepsakthis22cse:sps2004@cluster0.adfzslm.mongodb.net/Zoggy?retryWrites=true&w=majority&appName=Cluster0').then(()=>{
+
+
+
+
+mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log(`DB connected to the port: ${PORT}`);
 }).catch(err=> console.log(err))
+
+
+
 app.post('/register',(req,res)=>{
     User.create(req.body).then(result=>res.json(result)).catch(err=>res.json(err))
 })
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: `${process.env.EMAIL}`,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+  
+  var mailOptions = {
+    from: process.env.EMAIL,
+    to: otpemail,
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
 app.post('/login',(req,res)=>{
     const {email,password}=req.body;
@@ -30,7 +62,13 @@ app.post('/login',(req,res)=>{
         }
     }).catch(err=>res.json(err))
 })
+
+
 app.post('/')
+
+
+
+
 app.listen(PORT,()=>{
     console.log(`server is running on the port : ${PORT}`);
 })
