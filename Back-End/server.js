@@ -30,6 +30,7 @@ app.post('/login',(req,res)=>{
         }
     }).catch(err=>res.json(err))
 })
+app.post('/')
 app.listen(PORT,()=>{
     console.log(`server is running on the port : ${PORT}`);
 })
