@@ -5,10 +5,11 @@ const cors=require('cors')
 const app=express()
 const nodemailer=require('nodemailer')
 const User=require('./models/UserModel')
+const otpgenerator=require('otp-generator')
 app.use(express.json())
 app.use(cors())
 const PORT=1234
-
+const otp=otpgenerator.generate(6,{upperCaseAlphabets:false, lowerCaseAlphabets:false, specialChars:false})
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log(`DB connected to the port: ${PORT}`);
 }).catch(err=> console.log(err))
@@ -17,8 +18,7 @@ app.post('/register',(req,res)=>{
     User.create(req.body).then(result=>res.json(result)).catch(err=>res.json(err))
 })
 
-app.post('/',(req,res)=>{
-
+app.post('/login/:email',(req,res)=>{
     var transporter = nodemailer.createTransport({
         host:'smtp.gmail.com',
         port: 465,
@@ -28,12 +28,12 @@ app.post('/',(req,res)=>{
             pass: process.env.APP_PASSWORD
         }
     });
-    
+    const email=req.params.email;
     var mailOptions = {
         from: process.env.EMAIL,
-        to: 'chitrasridharan1980@gmail.com',
+        to: email,
         subject: 'HI...',
-        text: 'That was easy!'
+        text: `The otp is ${otp}`
     };
     
     transporter.sendMail(mailOptions, function(error, info){
@@ -45,6 +45,7 @@ app.post('/',(req,res)=>{
     });
     
 })
+
 app.post('/login',(req,res)=>{
     const {email,password}=req.body;
     User.findOne({email:email}).then(user=>{
@@ -65,5 +66,6 @@ app.post('/login',(req,res)=>{
 
 app.listen(PORT,()=>{
     console.log(`server is running on the port : ${PORT}`);
+    
 })
 
