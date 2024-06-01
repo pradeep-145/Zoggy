@@ -9,14 +9,9 @@ app.use(express.json())
 app.use(cors())
 const PORT=1234
 
-
-
-
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log(`DB connected to the port: ${PORT}`);
 }).catch(err=> console.log(err))
-
-
 
 app.post('/register',(req,res)=>{
     User.create(req.body).then(result=>res.json(result)).catch(err=>res.json(err))
@@ -24,8 +19,6 @@ app.post('/register',(req,res)=>{
 
 app.post('/',(req,res)=>{
 
-    console.log(process.env.EMAIL)
-    console.log(process.env.EMAIL_PASSWORD)
     var transporter = nodemailer.createTransport({
         host:'smtp.gmail.com',
         port: 465,
@@ -69,11 +62,6 @@ app.post('/',(req,res)=>{
         }
     }).catch(err=>res.json(err))
 })
-
-
-
-
-
 
 app.listen(PORT,()=>{
     console.log(`server is running on the port : ${PORT}`);
