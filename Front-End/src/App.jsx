@@ -5,6 +5,7 @@ import Login from './components/Authentication-Comp/Login'
 import Register from './components/Authentication-Comp/Register'
 import Home from './components/Pages-Comp/Home'
 import Landing from './components/Pages-Comp/Landing'
+import OtpVerification from './components/Authentication-Comp/OtpVerification'
 
 
 function App() {
@@ -18,8 +19,8 @@ function App() {
   <Route path='/register' element={ <Register />}></Route>
   <Route path='/login' element={<Login />}></Route>
   <Route path='/home' element={<Home />}></Route>
+  <Route path='/otpverification/:email' element={<OtpVerification />}></Route>
   {/* <Route path='/cart' element={}></Route>
-  <Route path='/' element={}></Route>
   <Route path='/' element={}></Route>
 <Route path='/' element={}></Route> */}
   </Routes>    

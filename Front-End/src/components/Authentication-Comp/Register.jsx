@@ -1,43 +1,45 @@
 import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
-
-const Register = () => {
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 
-  const [name, setName]=useState();
-  const [email,setEmail]=useState();
-  const [pass,setPass]=useState();
-  const [confpass,setConfpass]=useState();
-  const navigate=useNavigate();
+export default function Register() {
+        const [name,setName]=useState();
+        const [email,setEmail]=useState();
+        const [password,setPass]=useState();
+        const navigate=useNavigate()
+        const handleSubmit=(e)=>{
+            e.preventDefault(); 
+            axios.post('http://localhost:1234/register',{name,email,password}).then(result=>{console.log(result)
+        navigate(`/login`)})
+            .catch(err=>console.log(err))
+        }
+    return (
+        <div className="text-center m-5-auto">
+            <h2>Join us</h2><br></br>
+            <h5>Create your personal account</h5><br></br>
+            <form onSubmit={handleSubmit}>
+                <p>
+                    <label>Username</label><br/>
+                    <input type="text" name="first_name"  onChange={(e)=>setName(e.target.value)}/>
+                </p>
+                <p>
+                    <label>Email address</label><br/>
+                    <input type="email" name="email"  onChange={(e)=>setEmail(e.target.value)}/>
+                </p>
+                <p>
+                    <label>Password</label><br/>
+                    <input type="password" name="password"   onChange={(e)=>setPass(e.target.value)} />
+                </p>
+                <p>
+                    <input type="checkbox" name="checkbox" id="checkbox" required /> <span>I agree all statements in <a href="https://google.com" target="_blank" rel="noopener noreferrer">terms of service</a></span>.
+                </p>
+                <p>
+                   <input type='submit' id='sub-btn' value='Register' ></input>
+                </p>
+            </form>
+            
+        </div>
+    )
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    if(pass===confpass){
-
-      axios.post("http://localhost:1234/register",{name,email,pass}).then(result=>{
-        console.log(result);
-        navigate('/login');
-      }).catch(err=>console.log(err))
-    }
-    else{
-      alert("Please recheck password!!");
-    }
-  }
-  
-  return (
-    <div className='container'>
-
-      <form action="/login">
-      <input type="text" placeholder='username' onChange={(e)=>setName(e.target.vale)}required/><br />
-      <input type="email" placeholder='email'onChange={(e)=>setEmail(e.target.vale)} required/><br />
-
-      <input type="password" placeholder='password' onChange={(e)=>setPass(e.target.vale)} required/><br />
-      <input type="password" placeholder='Re-Enter password' onChange={(e)=>setConfpass(e.target.vale)}required/><br />
-      <button type="submit" onClick={(e)=>handleSubmit(e)}>Register</button><br />
-      </form>
-    </div>
-  )
 }
-
-export default Register
