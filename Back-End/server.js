@@ -63,7 +63,14 @@ app.post('/login',(req,res)=>{
     
 })
 
-
+app.post('/otpverification/:email',(req,res)=>{
+    if(req.body.otp==otp){
+        res.json('success');
+    }
+    else{
+        res.json('Incorrect otp');
+    }
+})
 
 app.listen(PORT,()=>{
     console.log(`server is running on the port : ${PORT}`);

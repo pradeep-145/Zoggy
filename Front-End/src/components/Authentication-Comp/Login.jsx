@@ -17,8 +17,6 @@ const Login = () => {
       .catch(err=>console.log(err))
      
   }
-
-
   return (
     <div className='container'>
 <form onSubmit={handleSubmit}method='get'><br />
