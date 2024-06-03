@@ -7,6 +7,7 @@ const OtpVerification = () => {
     const [otp,setOtp]=useState();
     const navigate = useNavigate();
     const handleSubmit=(e)=>{
+        e.preventDefault();
         axios.post(`http://localhost:1234/otpverification/${email}`,{otp}).then((result)=>{
             if(result.data=='success'){
                 navigate('/home');
